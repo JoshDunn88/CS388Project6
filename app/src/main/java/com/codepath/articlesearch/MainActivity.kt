@@ -20,9 +20,7 @@ fun createJson() = Json {
 }
 
 private const val TAG = "MainActivity/"
-private const val SEARCH_API_KEY = BuildConfig.API_KEY
-private const val ARTICLE_SEARCH_URL =
-    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${SEARCH_API_KEY}"
+
 
 class MainActivity : AppCompatActivity() {
     private val articles = mutableListOf<DisplayArticle>()
@@ -32,10 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        supportActionBar?.title="Nutrition Tracker"
         makeEntryButton = findViewById(R.id.goToRecord)
         makeEntryButton.setOnClickListener {
             val intent = Intent(this@MainActivity, DetailActivity::class.java)

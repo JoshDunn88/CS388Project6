@@ -3,30 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="90dp">
 
     <TextView
         android:id="@+id/mediaTitle"
-        android:layout_width="182dp"
-        android:layout_height="52dp"
+        android:layout_width="228dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347" />
 
     <TextView
         android:id="@+id/mediaAbstract"
-        android:layout_width="130dp"
-        android:layout_height="59dp"
+        android:layout_width="134dp"
+        android:layout_height="34dp"
         android:ellipsize="end"
         android:maxLines="4"
         android:text="Abstract"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="133dp"
+        android:layout_height="42dp"
+        android:text="Calories"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mediaAbstract" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
