@@ -31,7 +31,6 @@ class ArticleAdapter(private val context: Context, private val articles: List<Di
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-        private val mediaImageView = itemView.findViewById<ImageView>(R.id.mediaImage)
         private val titleTextView = itemView.findViewById<TextView>(R.id.mediaTitle)
         private val abstractTextView = itemView.findViewById<TextView>(R.id.mediaAbstract)
 
@@ -41,11 +40,7 @@ class ArticleAdapter(private val context: Context, private val articles: List<Di
 
         fun bind(article: DisplayArticle) {
             titleTextView.text = article.headline
-            abstractTextView.text = article.abstract
-
-            Glide.with(context)
-                .load(article.mediaImageUrl)
-                .into(mediaImageView)
+            abstractTextView.text = article.byline
         }
 
         override fun onClick(v: View?) {

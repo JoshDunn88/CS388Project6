@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.Flow
         fun getAll(): Flow<List<ArticleEntity>>
 
         @Insert
-        fun insertAll(articles: List<ArticleEntity>)
-
+        fun insert(articleEntity: ArticleEntity)
+        //fun insertAll(articles: List<ArticleEntity>)
         @Query("DELETE FROM article_table")
         fun deleteAll()
-    }
+
+}

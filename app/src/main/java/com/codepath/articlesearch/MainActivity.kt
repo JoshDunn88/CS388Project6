@@ -1,20 +1,17 @@
 package com.codepath.articlesearch
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.articlesearch.databinding.ActivityMainBinding
-import com.codepath.asynchttpclient.AsyncHttpClient
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import okhttp3.Headers
-import org.json.JSONException
+
 
 fun createJson() = Json {
     isLenient = true
@@ -31,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val articles = mutableListOf<DisplayArticle>()
     private lateinit var articlesRecyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
+    lateinit var makeEntryButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +36,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        makeEntryButton = findViewById(R.id.goToRecord)
+        makeEntryButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, DetailActivity::class.java)
+            startActivity(intent)
+        }
 
         articlesRecyclerView = findViewById(R.id.articles)
         val articleAdapter = ArticleAdapter(this, articles)
@@ -51,9 +54,7 @@ class MainActivity : AppCompatActivity() {
                 databaseList.map { entity ->
                     DisplayArticle(
                         entity.headline,
-                        entity.articleAbstract,
-                        entity.byline,
-                        entity.mediaImageUrl
+                        entity.byline
                     )
                 }.also { mappedList ->
                     articles.clear()
@@ -63,43 +64,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val client = AsyncHttpClient()
-        client.get(ARTICLE_SEARCH_URL, object : JsonHttpResponseHandler() {
-            override fun onFailure(
-                statusCode: Int,
-                headers: Headers?,
-                response: String?,
-                throwable: Throwable?
-            ) {
-                Log.e(TAG, "Failed to fetch articles: $statusCode")
-            }
-
-            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
-                Log.i(TAG, "Successfully fetched articles: $json")
-                try {
-                    val parsedJson = createJson().decodeFromString(
-                        SearchNewsResponse.serializer(),
-                        json.jsonObject.toString()
-                    )
-                    parsedJson.response?.docs?.let { list ->
-                        lifecycleScope.launch(IO) {
-                            (application as ArticleApplication).db.articleDao().deleteAll()
-                            (application as ArticleApplication).db.articleDao().insertAll(list.map {
-                                ArticleEntity(
-                                    headline = it.headline?.main,
-                                    articleAbstract = it.abstract,
-                                    byline = it.byline?.original,
-                                    mediaImageUrl = it.mediaImageUrl
-                                )
-                            })
-                        }
-                    }
-                } catch (e: JSONException) {
-                    Log.e(TAG, "Exception: $e")
-                }
-            }
-
-        })
 
     }
 }

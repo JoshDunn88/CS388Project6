@@ -1,8 +1,8 @@
 package com.codepath.articlesearch
 
+import android.text.Editable
+
 data class DisplayArticle(
-    val headline: String?,
-    val abstract: String?,
-    val byline: String?,
-    val mediaImageUrl: String?
+    val headline: String,
+    val byline: String,
 ) : java.io.Serializable
