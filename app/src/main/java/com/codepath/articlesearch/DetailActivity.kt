@@ -28,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
                 (application as ArticleApplication).db.articleDao().insert(
                     ArticleEntity(
                         headline = nameInputField.text.toString(),
-                        byline = calorieInputField.text.toString()
+                        byline = calorieInputField.text.toString().toInt()
                     )
                 )
             }}

@@ -18,14 +18,21 @@ class DashboardActivity: AppCompatActivity() {
     lateinit var dashRecordButton: Button
     lateinit var clearButt: Button
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
         averageCaloriesDisplay = findViewById(R.id.avgCalView)
         minCaloriesDisplay = findViewById(R.id.minCalView)
         maxCaloriesDisplay = findViewById(R.id.maxCalView)
         dashRecordButton = findViewById(R.id.addFromDashButton)
         clearButt = findViewById(R.id.clearButton)
+
+        var maxCals=0
+        var minCals=0
+        var avgCals=0
 
         clearButt.setOnClickListener{let{
             lifecycleScope.launch(IO) {

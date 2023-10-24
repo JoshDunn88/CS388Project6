@@ -40,7 +40,7 @@ class ArticleAdapter(private val context: Context, private val articles: List<Di
 
         fun bind(article: DisplayArticle) {
             titleTextView.text = article.headline
-            abstractTextView.text = article.byline
+            abstractTextView.text = article.byline.toString()
         }
 
         override fun onClick(v: View?) {

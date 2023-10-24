@@ -9,5 +9,5 @@ import androidx.room.PrimaryKey
     data class ArticleEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "headline") val headline: String,
-    @ColumnInfo(name = "byline") val byline: String
+    @ColumnInfo(name = "byline") val byline: Int
     )

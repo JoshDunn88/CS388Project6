@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class DashFragment : Fragment() {
@@ -46,7 +47,25 @@ class DashFragment : Fragment() {
             lifecycleScope.launch(Dispatchers.IO) {
                 (activity?.application as ArticleApplication).db.articleDao().deleteAll()
             }}
+                maxCaloriesDisplay.text="Total Calories: 0"
+                minCaloriesDisplay.text="Total Meals: 0"
+                averageCaloriesDisplay.text="Average Calories/Meal: 0"
         }
+        var totalMeals=0
+        var totalCalories=0
+        //var avgCalories=0
+
+        let{
+            lifecycleScope.launch(IO) {
+
+                totalMeals=(activity?.application as ArticleApplication).db.articleDao().getEntryCount()
+                maxCaloriesDisplay.text="Total Meals: " + totalMeals
+               if (totalMeals>0){
+                    totalCalories=(activity?.application as ArticleApplication).db.articleDao().getCalorieSum()
+                   averageCaloriesDisplay.text="Average Calories/Meal: " + (totalCalories/totalMeals)
+                }
+                minCaloriesDisplay.text="Total Calories Consumed: " + totalCalories
+            }}
 
 
     }

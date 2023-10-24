@@ -17,4 +17,10 @@ import kotlinx.coroutines.flow.Flow
         @Query("DELETE FROM article_table")
         fun deleteAll()
 
+     @Query("SELECT SUM(" + "byline" + ") as calorieSum " + " FROM " + "article_table")
+     fun getCalorieSum(): Int
+
+    @Query("SELECT COUNT(byline) FROM article_table")
+    fun getEntryCount(): Int
+
 }

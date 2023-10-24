@@ -4,5 +4,5 @@ import android.text.Editable
 
 data class DisplayArticle(
     val headline: String,
-    val byline: String,
+    val byline: Int,
 ) : java.io.Serializable
