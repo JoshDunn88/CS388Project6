@@ -4,27 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.codepath.articlesearch.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-
-
-fun createJson() = Json {
-    isLenient = true
-    ignoreUnknownKeys = true
-    useAlternativeNames = false
-}
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val TAG = "MainActivity/"
 
 
 class MainActivity : AppCompatActivity() {
-    private val articles = mutableListOf<DisplayArticle>()
-    private lateinit var articlesRecyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
     lateinit var makeEntryButton: Button
 
@@ -33,35 +21,39 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        //val fragmentManager: FragmentManager = supportFragmentManager
+
+        // define your fragments here
+        val dashboardFragment: Fragment = DashFragment()
+        val articleListFragment: Fragment = ArticleListFragment()
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNav)
+
+        // handle navigation selection
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            lateinit var fragment: Fragment
+            when (item.itemId) {
+                R.id.nav_log -> fragment = articleListFragment
+                R.id.nav_dash -> fragment = dashboardFragment
+            }
+            replaceFragment(fragment)
+            true
+        }
+
+        // Set default selection
+        bottomNavigationView.selectedItemId = R.id.nav_log
+
         supportActionBar?.title="Nutrition Tracker"
         makeEntryButton = findViewById(R.id.goToRecord)
         makeEntryButton.setOnClickListener {
             val intent = Intent(this@MainActivity, DetailActivity::class.java)
             startActivity(intent)
         }
-
-        articlesRecyclerView = findViewById(R.id.articles)
-        val articleAdapter = ArticleAdapter(this, articles)
-        articlesRecyclerView.adapter = articleAdapter
-        articlesRecyclerView.layoutManager = LinearLayoutManager(this).also {
-            val dividerItemDecoration = DividerItemDecoration(this, it.orientation)
-            articlesRecyclerView.addItemDecoration(dividerItemDecoration)
         }
-        lifecycleScope.launch {
-            (application as ArticleApplication).db.articleDao().getAll().collect { databaseList ->
-                databaseList.map { entity ->
-                    DisplayArticle(
-                        entity.headline,
-                        entity.byline
-                    )
-                }.also { mappedList ->
-                    articles.clear()
-                    articles.addAll(mappedList)
-                    articleAdapter.notifyDataSetChanged()
-                }
-            }
-        }
-
-
+    private fun replaceFragment(newFragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.article_frame_layout, newFragment)
+        fragmentTransaction.commit()
     }
-}
+    }

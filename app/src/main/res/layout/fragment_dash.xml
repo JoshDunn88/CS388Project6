@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/avgCalView"
+            android:layout_width="333dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="96dp"
+            android:text="Average Calories:"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/minCalView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avgCalView"
+            android:layout_width="335dp"
+            android:layout_height="54dp"
+            android:text="Min Calories: "
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="88dp" />
+
+        <TextView
+            android:id="@+id/maxCalView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/minCalView"
+            android:layout_width="336dp"
+            android:layout_height="49dp"
+            android:text="Max Calories: "
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="142dp" />
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="134dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:text="Clear Data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.866"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maxCalView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

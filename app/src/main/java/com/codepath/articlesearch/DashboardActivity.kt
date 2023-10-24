@@ -27,11 +27,6 @@ class DashboardActivity: AppCompatActivity() {
         dashRecordButton = findViewById(R.id.addFromDashButton)
         clearButt = findViewById(R.id.clearButton)
 
-        dashRecordButton.setOnClickListener{
-
-            val i = Intent(this@DashboardActivity, DetailActivity::class.java)
-            startActivity(i)
-        }
         clearButt.setOnClickListener{let{
             lifecycleScope.launch(IO) {
                 (application as ArticleApplication).db.articleDao().deleteAll()
